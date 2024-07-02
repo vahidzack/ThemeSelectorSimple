@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    @if (HttpContext.Request.Cookies.ContainsKey("Theme") == false)
+    {
+        <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    }
+    else if (HttpContext.Request.Cookies["Theme"] == "default")
+    {
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    }
+    else if (HttpContext.Request.Cookies["Theme"] == "Solar")
+    {
+        <link rel="stylesheet" href=bootstrap.min.Solar.css />
+    }
+    else if (HttpContext.Request.Cookies["Theme"] == "SuperHero")
+    {
+        <link rel="stylesheet" href=bootstrap.min.SuperHero.css />
+    }
+    
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="ThemeSelectorSimple.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routes />
+    <script src="_framework/blazor.web.js"></script>
+</body>
+
+@code {
+    [CascadingParameter] public HttpContext HttpContext { get; set; }
+}
+</html>

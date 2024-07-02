@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+<button class="btn btn-primary">Button</button>
+<input class="form-control" />
+<EditForm Model="formModel" FormName="MyForm" OnSubmit="SetTheme">
+    <div>
+        <label class="form-label">Theme</label>
+        <InputSelect @bind-Value=formModel.ThemeName class="form-select">
+            <option>Nothing To show</option>
+            <option value="default">Default</option>
+            <option value="Solar">Solar</option>
+            <option value="SuperHero">SuperHero</option>
+        </InputSelect>
+    </div>
+    <button class="btn btn-primary" type="submit">Set Theme</button>
+</EditForm>
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+@code {
+    public class FormModelClass
+    {
+        public string ThemeName { get; set; } = "default";
+    }
+    [SupplyParameterFromForm(FormName = "MyForm")]
+    public FormModelClass formModel { get; set; } = new();
+
+    [CascadingParameter] public HttpContext httpContext { get; set; }
+
+    async Task SetTheme()
+    {
+        httpContext.Response.Cookies.Delete("Theme");
+        httpContext.Response.Cookies.Append("Theme", formModel.ThemeName);
+        httpContext.Response.Redirect("/");
+    }
+}
